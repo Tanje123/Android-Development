@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //
     private void updateUI() {
 
         mScore.setText("Score: " + score);
