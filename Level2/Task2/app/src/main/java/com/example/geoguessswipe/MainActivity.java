@@ -17,6 +17,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener  {
     List<GeoObject> mGeoObjects;
     private GestureDetector mGestureDetector;
+    private GestureDetector leftGestureDetector;
+    private GestureDetector rightGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +40,146 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         recyclerView.setAdapter(mAdapter);
 
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        leftGestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
 
             @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
 
+            @Override
+            public void onShowPress(MotionEvent e) {
+
+            }
+
+            @Override
             public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
 
-                return true;
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
 
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+               final int SWIPE_THRESHOLD = 100;
+                final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+                boolean result = false;
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+                    System.out.println("FIRST POINT: LEFT"+diffY+" SECOND POINT "+diffX);
+                    System.out.println(" LEFT"+Math.abs(diffX)+" SECOND POINT "+diffY);
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                onSwipeRight();
+                            }
+                            result = true;
+                        }
+                    }
+                    else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            onSwipeBottom();
+                        } else {
+                            onSwipeTop();
+                        }
+                        result = true;
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                return result;
+            }
+            public void onSwipeRight() {
+            }
+
+            public void onSwipeLeft() {
+            }
+
+            public void onSwipeTop() {
+            }
+
+            public void onSwipeBottom() {
+            }
+
+        });
+
+        rightGestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                final int SWIPE_THRESHOLD = 100;
+                final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+                boolean result = false;
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+                    System.out.println("FIRST POINT: RIGHT"+diffY+" SECOND POINT "+diffX);
+                    System.out.println(" RIGHT"+Math.abs(diffX)+" SECOND POINT "+diffY);
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                onSwipeRight();
+                                result = true;
+                            }
+                        }
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                return result;
+            }
+            public void onSwipeRight() {
+            }
+
+            public void onSwipeLeft() {
+            }
+
+            public void onSwipeTop() {
+            }
+
+            public void onSwipeBottom() {
             }
 
         });
@@ -58,6 +193,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         if (child != null && mGestureDetector.onTouchEvent(e)) {
             Toast.makeText(this, mGeoObjects.get(mAdapterPosition).getmGeoName(), Toast.LENGTH_SHORT).show();
         }
+
+        if (child != null && leftGestureDetector.onTouchEvent(e)) {
+            if (mGeoObjects.get(mAdapterPosition).getInEurope().equals(true)) {
+                Toast.makeText(this, "WRONG, THIS IS IN EUROPE ", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "CORRECT, THIS IS NOT IN EUROPE ", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (child != null && rightGestureDetector.onTouchEvent(e)) {
+            if (mGeoObjects.get(mAdapterPosition).getInEurope().equals(true)) {
+                Toast.makeText(this, "CORRECT, THIS IS IN EUROPE ", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "WRONG, THIS IS NOT IN EUROPE ", Toast.LENGTH_SHORT).show();
+            }        }
+
         return false;
     }
 
