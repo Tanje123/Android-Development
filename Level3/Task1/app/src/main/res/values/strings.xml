@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Quest App</string>
+    <string name="introtekst">Welcome to the Android Quest</string>
+    <string name="start_quest">Start the Quest</string>
+    <string name="choose_answer">Choose an answer</string>
+    <string name="try_again">Try again!</string>
+    <string name="verify_button_text">Click here to see if your answer is correct and get your next clue</string>
+    <string name="end_text">You have reached the end and earned the game !!!!</string>
+</resources>

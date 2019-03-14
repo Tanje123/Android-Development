@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="question1">Who is the co-founder of Android?</string>
+    <string-array name="answer1">
+        <item>Andy Rubin</item>
+        <item>Andy Rubin</item>
+        <item>Larry Page &amp; Sergey Brin</item>
+        <item>Sundar Pichai</item>
+    </string-array>
+    <string name="question2">In which language is Android written?</string>
+    <string-array name="answer2">
+        <item>Java</item>
+        <item>Java</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+    </string-array>
+    <string name="question3">Which method gets called after onCreate in the Activity-lifecycle?</string>
+    <string-array name="answer3">
+        <item>onStart</item>
+        <item>onCreateView</item>
+        <item>onStart</item>
+        <item>onResume</item>
+    </string-array>
+    <string name="question4">In what year did google announce Material Design?</string>
+    <string-array name="answer4">
+        <item>2014</item>
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+    </string-array>
+    <string name="question5">What is the code name of version 1.6?</string>
+    <string-array name="answer5">
+        <item>Donut</item>
+        <item>Cupcake</item>
+        <item>Donut</item>
+        <item>Eclair</item>
+    </string-array>
+    <string name="question6">Which version of Android did not run on phones?</string>
+    <string-array name="answer6">
+        <item>Android 3.0</item>
+        <item>Android 1.0</item>
+        <item>Android 2.0</item>
+        <item>Android 3.0</item>
+    </string-array>
+    <string name="question7">When did Google announced Android Wear?</string>
+    <string-array name="answer7">
+        <item>2014</item>
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+    </string-array>
+    <string name="question8">Who build the first smartwatch?</string>
+    <string-array name="answer8">
+        <item>Sony, 2010</item>
+        <item>Sony, 2010</item>
+        <item>Samsung, 2012</item>
+        <item>LG, 2014</item>
+    </string-array>
+    <string name="question9">For what for OS was Android originally created?</string>
+    <string-array name="answer9">
+        <item>Digital cameras</item>
+        <item>Desktop computers</item>
+        <item>Digital cameras</item>
+        <item>Smartphones</item>
+    </string-array>
+    <string name="question10">Who is the CEO of Android?</string>
+    <string-array name="answer10">
+        <item>Sundar Pichai</item>
+        <item>Andy Rubin</item>
+        <item>Larry Page &amp; Sergey Brin</item>
+        <item>Sundar Pichai</item>
+    </string-array>
+
+
+
+</resources>
