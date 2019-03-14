@@ -43,7 +43,11 @@ public class QuestionActivity extends AppCompatActivity {
                             Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
                     RadioButton answer = (RadioButton) findViewById(selectedId);
-                    answer.getText();
+                    if (answer.getText() == correctAnswer) {
+                        //good
+                    } else {
+
+                    }
                 }
 
             }
