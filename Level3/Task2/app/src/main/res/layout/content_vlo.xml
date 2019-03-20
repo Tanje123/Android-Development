@@ -8,7 +8,8 @@
     tools:context=".VLO"
     tools:showIn="@layout/activity_vlo">
 
-    <ListView
+    <WebView
+        android:id="@+id/webView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

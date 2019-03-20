@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 public class ROOSTERS extends AppCompatActivity {
-    private static String m_Text = "";
+    private static String m_rooster = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class ROOSTERS extends AppCompatActivity {
         setContentView(R.layout.activity_roosters);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loadPage(m_Text);
+        loadPage(m_rooster);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,8 +46,8 @@ public class ROOSTERS extends AppCompatActivity {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        m_Text = String.valueOf(taskEditText.getText());
-                        loadPage(m_Text);
+                        m_rooster = String.valueOf(taskEditText.getText());
+                        loadPage(m_rooster);
                  }
                 })
                 .setNegativeButton("Cancel", null)
