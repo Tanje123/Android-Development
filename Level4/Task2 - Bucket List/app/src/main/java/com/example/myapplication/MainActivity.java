@@ -233,14 +233,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
     @Override
     public void onPlusClick(Item item) {
         System.out.println("DOITASDSADSD");
-        if (item.getCompleted().equals(true)) {
+       if (item.getCompleted().equals(true)) {
            item.setCompleted(false);
-        } else if (item.getCompleted().equals(false)) {
+
+       } else if (item.getCompleted().equals(false)) {
             item.setCompleted(true);
         }
-        else {
+       else {
         }
-        System.out.println(item.getCompleted()+" COMPLETED");
+       // System.out.println(item.getCompleted()+" COMPLETED");
         updateProduct(item);
     }
 

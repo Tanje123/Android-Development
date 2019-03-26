@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,20 +43,18 @@ public class itemListAdapter extends RecyclerView.Adapter<itemListAdapter.ViewHo
         viewHolder.tvTitle.setText(itemList.get(viewHolder.getAdapterPosition()).getTitel());
         viewHolder.tvDescription.setText(itemList.get(viewHolder.getAdapterPosition()).getDescription());
         viewHolder.checkBox.setChecked(itemList.get(viewHolder.getAdapterPosition()).getCompleted());
+        if (itemList.get(viewHolder.getAdapterPosition()).getCompleted()) {
+            viewHolder.tvTitle.setPaintFlags( viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            viewHolder.tvDescription.setPaintFlags( viewHolder.tvDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else if (!(itemList.get(viewHolder.getAdapterPosition()).getCompleted())) {
+            viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            viewHolder.tvDescription.setPaintFlags(viewHolder.tvDescription.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
-        viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (itemList.get(viewHolder.getAdapterPosition()).getCompleted()) {
-                    itemList.get(viewHolder.getAdapterPosition()).setCompleted(false);
-                } else {
-                    itemList.get(viewHolder.getAdapterPosition()).setCompleted(true);
-                }
+        }
 
             }
-        });
-    }
+
+
 
 
     @Override
@@ -75,16 +74,20 @@ public class itemListAdapter extends RecyclerView.Adapter<itemListAdapter.ViewHo
             tvDescription = itemView.findViewById(R.id.tvDescription);
             checkBox = itemView.findViewById(R.id.checkBox);
 
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-             @Override
-             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                 if (buttonView.isPressed()) {
-                            System.out.println("CLICKEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-                            itemClickListner.onPlusClick(itemList.get(getAdapterPosition()));
-                 }
-             }
-             }
-            );
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                        if (checkBox.isActivated()) {
+                            checkBox.setEnabled(false);
+                        } else {
+                            checkBox.setEnabled(true);
+                        }
+
+                        itemClickListner.onPlusClick(itemList.get(getAdapterPosition()));
+                }
+            });
+
 
         }
     }
