@@ -3,6 +3,7 @@ package com.example.level5_gameback.Model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,6 +14,7 @@ public class Game {
     //The attributes of the class
     //The primarykey of the table is going to be the title of the game
     @PrimaryKey
+    @NonNull
     private String titel;
     //Other attributes
     @ColumnInfo
