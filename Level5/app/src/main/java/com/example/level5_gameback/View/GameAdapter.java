@@ -17,10 +17,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
 
     private List<Game> mGames;
 
-    public GameAdapter(List<Game> mGames) {
-        this.mGames = mGames;
-    }
-
         @NonNull
         @Override
         public GameAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -30,6 +26,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
             // Return a new holder instance
             GameAdapter.ViewHolder viewHolder = new GameAdapter.ViewHolder(view);
             return viewHolder;
+        }
+
+        public void setList(List<Game> games){
+            mGames = games;
+            notifyDataSetChanged();
         }
 
     @Override
@@ -43,7 +44,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
 
     @Override
     public int getItemCount() {
-        return mGames.size();
+        return mGames == null ? 0 : mGames.size();
     }
 
     public void swapList (List<Game> newList) {

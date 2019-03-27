@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -37,15 +38,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        setupRecyclervView();
         setupMainViewModel();
         setupFAB();
-        setupRecyclervView();
     }
     //setup Recyclerview
     private void setupRecyclervView() {
         mRecyclerView = findViewById(R.id.recycler);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new GameAdapter();
+        mRecyclerView.setAdapter(mAdapter);
     }
+
     //Setup FAB
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -53,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              //  Game game = new Game("pad","Mar","na");
+               // mMainViewModel.insert(game);
+                //System.out.println("ADEEEEEEEEEEEEEEEEEEEEED");
+                //mAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
                 startActivity(intent);
             }
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         mMainViewModel.getGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(@Nullable List<Game> reminders) {
+                mAdapter.setList(reminders);
                 updateUI(reminders);
             }
         });
@@ -73,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(List<Game> reminders) {
         if (mAdapter == null) {
-            mAdapter = new GameAdapter(reminders);
+            mAdapter = new GameAdapter();
+            mAdapter.setList(reminders);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.swapList(reminders);
