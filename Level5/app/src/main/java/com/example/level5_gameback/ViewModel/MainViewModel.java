@@ -22,7 +22,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<Game>> getReminders() {
+    public LiveData<List<Game>> getGames() {
         return mGames;
     }
 

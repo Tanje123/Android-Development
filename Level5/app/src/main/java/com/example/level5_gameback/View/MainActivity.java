@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<Game> mGames;
-    //private GameAdapter mAdapter;
+    private GameAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
 
@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // mMainViewModel.insert();
+             //   mMainViewModel.insert();
 
             }
         });
 
-
+        mRecyclerView = findViewById(R.id.recycler);
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mMainViewModel.getReminders().observe(this, new Observer<List<Game>>() {
+        mMainViewModel.getGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(@Nullable List<Game> reminders) {
                 mGames = reminders;
@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-    //    if (mAdapter == null) {
-      //      mAdapter = new ReminderAdapter(mReminders);
-        //    mRecyclerView.setAdapter(mAdapter);
-        //} else {
-          //  mAdapter.swapList(mReminders);
-        //}
+        if (mAdapter == null) {
+            mAdapter = new GameAdapter(mGames);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.swapList(mGames);
+        }
     }
 
     @Override
