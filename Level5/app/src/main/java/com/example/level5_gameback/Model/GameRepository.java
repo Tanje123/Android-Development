@@ -53,4 +53,13 @@ public class GameRepository {
             }
         });
     }
+
+    public void deleteAll() {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mGameDao.deleteAll();
+            }
+        });
+    }
 }

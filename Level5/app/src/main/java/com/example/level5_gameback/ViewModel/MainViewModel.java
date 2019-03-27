@@ -40,4 +40,8 @@ public class MainViewModel extends AndroidViewModel {
     public void delete(Game game) {
         mRepository.delete(game);
     }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
 }

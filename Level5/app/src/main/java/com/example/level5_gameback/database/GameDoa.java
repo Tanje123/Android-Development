@@ -21,9 +21,9 @@ public interface GameDoa {
     @Delete
     void delete(Game game);
 
-    //Delete multiple games
-    @Delete
-    void delete(List<Game> games);
+    //Delete all games
+    @Query("DELETE FROM game_table")
+    void deleteAll();
 
     //Update a existing game
     @Update

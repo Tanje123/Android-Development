@@ -7,6 +7,7 @@ package com.example.level5_gameback.View;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +25,6 @@ import com.example.level5_gameback.ViewModel.MainViewModel;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Game> mGames;
     private GameAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
@@ -37,35 +37,49 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        setupMainViewModel();
+        setupFAB();
+        setupRecyclervView();
+    }
+    //setup Recyclerview
+    private void setupRecyclervView() {
+        mRecyclerView = findViewById(R.id.recycler);
+    }
+    //Setup FAB
+    private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
+        //Setup onclick listneren on FAB
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   mMainViewModel.insert();
-
+                Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
+                startActivity(intent);
             }
         });
+    }
 
-        mRecyclerView = findViewById(R.id.recycler);
+    //Setup MainViewModel
+    private void setupMainViewModel() {
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mMainViewModel.getGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(@Nullable List<Game> reminders) {
-                mGames = reminders;
-                updateUI();
+                updateUI(reminders);
             }
         });
-
     }
 
-    private void updateUI() {
+
+    private void updateUI(List<Game> reminders) {
         if (mAdapter == null) {
-            mAdapter = new GameAdapter(mGames);
+            mAdapter = new GameAdapter(reminders);
             mRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.swapList(mGames);
+            mAdapter.swapList(reminders);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete_item) {
+            System.out.println("DeleteAll");
+            mMainViewModel.deleteAll();
             return true;
         }
 
