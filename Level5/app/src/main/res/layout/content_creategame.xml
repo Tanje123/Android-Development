@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Game"
+            android:hint="@string/app_hintgame"
             android:inputType="textPersonName" />
 
         <EditText
@@ -30,13 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Console"
+            android:hint="@string/app_console"
             android:inputType="textPersonName" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status" />
+            android:text="@string/app_status" />
 
         <Spinner
             android:id="@+id/spinnerStatus"
