@@ -2,6 +2,7 @@ package com.example.level5_gameback.Model;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 
 import com.example.level5_gameback.database.GameDoa;
 import com.example.level5_gameback.database.GameRoomDatabase;
@@ -29,7 +30,11 @@ public class GameRepository {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mGameDao.insert(game);
+                try {
+                    mGameDao.insert(game);
+                } catch (SQLiteConstraintException ex) {
+                    update(game);
+                }
             }
         });
     }

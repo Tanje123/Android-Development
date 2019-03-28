@@ -5,12 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 //Entity game
 @Entity(tableName = "game_table")
-public class Game {
+public class Game implements Serializable {
     //The attributes of the class
     //The primarykey of the table is going to be the title of the game
     @PrimaryKey

@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,9 +25,12 @@ import com.example.level5_gameback.Model.Game;
 import com.example.level5_gameback.R;
 import com.example.level5_gameback.ViewModel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    static Game game = new Game("","","");
+    private static Game currGame = game;
     private GameAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
@@ -46,8 +51,29 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecyclervView() {
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new GameAdapter();
+        mAdapter = new GameAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        setUpItemTouchHelper();
+    }
+
+    private void setUpItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int swipedPosition = viewHolder.getAdapterPosition();
+                mMainViewModel.delete(swipedPosition);
+
+            }
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     //Setup FAB
@@ -57,10 +83,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Game game = new Game("pad","Mar","na");
-               // mMainViewModel.insert(game);
-                //System.out.println("ADEEEEEEEEEEEEEEEEEEEEED");
-                //mAdapter.notifyDataSetChanged();
+                CreateGameActivity.staticTitle = "";
+                CreateGameActivity.staticConsole = "";
+                CreateGameActivity.staticStatus = "";
                 Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
                 startActivity(intent);
             }
@@ -79,10 +104,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Game game = CreateGameActivity.gameStat;
+        if (!(game == null)) {
+                System.out.println("NIET NULL");
+                if (!(currGame.equals(game))) {
+                    mMainViewModel.insert(game);
+                    System.out.println("UPDATED");
+                    mAdapter.notifyDataSetChanged();
+                    currGame = game;
+                }
+            }
+        }
+
 
     private void updateUI(List<Game> reminders) {
         if (mAdapter == null) {
-            mAdapter = new GameAdapter();
+            mAdapter = new GameAdapter(this);
             mAdapter.setList(reminders);
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -107,8 +147,22 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete_item) {
-            System.out.println("DeleteAll");
+            List myList = new ArrayList();
+            for (int i = 0; i < mMainViewModel.getGames().getValue().size(); i++) {
+                myList.add(mMainViewModel.getGames().getValue().get(i));
+            }
+
+
             mMainViewModel.deleteAll();
+            Snackbar.make(mRecyclerView, "Deleted all games", Snackbar.LENGTH_LONG)
+                    .setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for (int i = 0; i < myList.size(); i++) {
+                                mMainViewModel.insert((Game) myList.get(i));
+                            }
+                        }
+                    }).show();
             return true;
         }
 

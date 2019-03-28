@@ -1,6 +1,7 @@
 package com.example.level5_gameback.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +15,12 @@ import com.example.level5_gameback.R;
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
-
     private List<Game> mGames;
+    private Context context;
+
+    public GameAdapter(Context context) {
+        this.context = context;
+    }
 
         @NonNull
         @Override
@@ -40,6 +45,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
         viewHolder.console.setText(game.getConsole());
         viewHolder.status.setText(game.getStatus());
         viewHolder.datum.setText(game.getDate());
+
     }
 
     @Override
@@ -68,6 +74,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>  {
             console = itemView.findViewById(R.id.console);
             status = itemView.findViewById(R.id.status);
             datum = itemView.findViewById(R.id.datum);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Game game = mGames.get(getAdapterPosition());
+                    Intent intent= new Intent(context, CreateGameActivity.class);
+                    CreateGameActivity.staticTitle = titel.getText().toString();
+                    CreateGameActivity.staticConsole = console.getText().toString();
+                    CreateGameActivity.staticStatus = status.getText().toString();
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.level5_gameback.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,10 @@ public class CreateGameActivity extends AppCompatActivity {
     private EditText title;
     private EditText console;
     private Spinner status;
+    public static Game gameStat;
+    public static String staticTitle = "";
+    public static String staticConsole = "";
+    public static String staticStatus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,20 @@ public class CreateGameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setupVariable();
         setupFab();
+
+        if (!(staticTitle.length() == 0)) {
+            title.setText(staticTitle);
+            console.setText(staticConsole);
+            int pos = 3;
+            if (staticStatus.equals("Stalled")) {
+                pos = 2;
+            } else if (staticStatus.equals("Playing")) {
+                pos = 1;
+            } else if (staticStatus.equals("Want to play")) {
+                pos = 0;
+            }
+            status.setSelection(pos);
+        }
     }
 
     private void setupVariable() {
@@ -43,7 +62,7 @@ public class CreateGameActivity extends AppCompatActivity {
                     Toast.makeText(CreateGameActivity.this, "Please fill in all fields!",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    passGame(title.toString(),console.toString(),status.toString());
+                    passGame(title.getText().toString(),console.getText().toString(),status.getSelectedItem().toString());
                     finish();
                 }
 
@@ -51,9 +70,11 @@ public class CreateGameActivity extends AppCompatActivity {
         });
     }
 
-    private Game passGame(String title, String console, String status) {
+    private void passGame(String title, String console, String status) {
+        gameStat = new Game(title,console,status);
+        System.out.println("DETAILS: "+title+" "+console+" "+status);
+        finish();
 
-        return null;
     }
 
     private Boolean validateVariable() {
