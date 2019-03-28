@@ -11,6 +11,9 @@ import com.example.level5_gameback.Model.Game;
 
 import java.util.List;
 
+//GameDoa
+//handles all the actions with the database
+
 @Dao
 public interface GameDoa {
     //Insert a new game

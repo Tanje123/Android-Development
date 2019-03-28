@@ -7,7 +7,7 @@ import android.content.Context;
 
 import com.example.level5_gameback.Model.Game;
 
-//GameRoomDatabase
+//GameRoomDatabase sets up the database
 @Database(entities = {Game.class}, version = 1, exportSchema = false)
 public abstract class GameRoomDatabase extends RoomDatabase {
     //Name of the database
