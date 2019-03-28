@@ -5,11 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
-
+//item class
 @Entity(tableName = "item_table")
-
 public class Item implements Serializable {
-
+    //atribrutes
     @PrimaryKey(autoGenerate = true)
     private Long id;
     @ColumnInfo(name = "titel")
@@ -18,13 +17,13 @@ public class Item implements Serializable {
     private String description;
     @ColumnInfo(name = "completed")
     private Boolean completed;
-
+    //constructor
     public Item(String titel, String description, Boolean completed) {
         this.titel = titel;
         this.description = description;
         this.completed = completed;
     }
-
+    //getters and setters
     public Boolean getCompleted() {
         return completed;
     }
