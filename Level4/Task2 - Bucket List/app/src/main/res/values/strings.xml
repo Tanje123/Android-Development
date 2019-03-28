@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Bucket list</string>
     <string name="action_settings">Settings</string>
+    <string name="app_create">Create</string>
+    <string name="app_title">Titel</string>
+    <string name="app_desc">Beschrijving</string>
 </resources>

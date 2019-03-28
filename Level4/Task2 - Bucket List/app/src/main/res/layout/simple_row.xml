@@ -36,7 +36,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="2dp"
-                android:text="Name"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="18sp" />
 
@@ -48,7 +47,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="4dp"
                 android:color="#909090"
-                android:text="Phone"
                 android:textSize="12sp" />
 
         </LinearLayout>
