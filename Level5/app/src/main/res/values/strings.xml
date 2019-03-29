@@ -4,8 +4,10 @@
     <string name="delete">Delete</string>
     <string name="title_activity_creategame">Create game</string>
     <string name="app_hintgame">Game</string>
-    <string name="app_console">Game</string>
+    <string name="app_console">Console</string>
     <string name="app_status">Status</string>
+    <string name="app_deleted">Removed all games</string>
+    <string name="app_undo">Undo</string>
 
     <string-array name="Options">
         <item>Want to play</item>

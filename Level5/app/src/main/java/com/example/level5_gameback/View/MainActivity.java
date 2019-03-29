@@ -198,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
             //delete all of the games
             mMainViewModel.deleteAll();
             //make the snackbar apear that can undo the delete action
-            Snackbar.make(mRecyclerView, "Deleted all games", Snackbar.LENGTH_LONG)
-                    .setAction("Undo", new View.OnClickListener() {
+            Snackbar.make(mRecyclerView, getString(R.string.app_deleted), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.app_undo), new View.OnClickListener() {
                         @Override
                         //when the undo button is clicked add all the items back
                         public void onClick(View v) {
