@@ -18,9 +18,14 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import Database.PasswordRoomDatabase;
 import Model.Password;
 import Repository.MainActivityViewModel;
 
@@ -33,11 +38,15 @@ public class SafeFragment extends Fragment {
     private SeekBar lengthSeekBar;
     private final int minLength = 1, maxLength = 128, defaultLength = 15;
     private int currentProgress;
-
+    private PasswordRoomDatabase db;
+    private Executor executor = Executors.newSingleThreadExecutor();
+    private Password[] passwordList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        db = PasswordRoomDatabase.getDatabase(getContext());
+        passwordList = new Password[0];
         return inflater.inflate(R.layout.fragment_safe, null);
     }
 
@@ -109,6 +118,15 @@ public class SafeFragment extends Fragment {
                 }
             }
         });
+
+        passwordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(passwordList.length == 0)) {
+                    insertPassword(passwordList[0]);
+                }
+            }
+        });
     }
 
     private void setupViewModel() {
@@ -124,6 +142,7 @@ public class SafeFragment extends Fragment {
         viewModel.getPassword().observe(getViewLifecycleOwner(), new Observer<Password[]>() {
             @Override
             public void onChanged(@Nullable Password[] passwords) {
+                passwordList = passwords;
                 passwordTextView.setText(passwords[0].getPassword());
             }
         });
@@ -157,5 +176,14 @@ public class SafeFragment extends Fragment {
 
         setupParams(upper,lower,numbers,special,length,exclude);
         return true;
+    }
+
+    private void insertPassword(final Password password) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.passwordDao().instertPassword(password);
+            }
+        });
     }
 }
