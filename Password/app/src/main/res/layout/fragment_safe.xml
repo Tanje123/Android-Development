@@ -5,60 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:text="Length"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:text="Switch"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintRight_toRightOf="@id/textView"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-    </LinearLayout>
-
     <TextView
         android:id="@+id/passwordTextField"
         android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/generateButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/lengthTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginBottom="172dp"
-        android:text="Safe"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Length"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Lowercase"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/lengthSeekBar" />
 
     <TextView
         android:id="@+id/textView3"
@@ -91,43 +67,56 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/lowercaseSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <Switch
-        android:id="@+id/switch3"
+        android:id="@+id/uppercaseSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <Switch
-        android:id="@+id/switch4"
+        android:id="@+id/numbersSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch3" />
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <Switch
-        android:id="@+id/switch5"
+        android:id="@+id/specialSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch4" />
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+    <Button
+        android:id="@+id/generateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Generate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <SeekBar
+        android:id="@+id/lengthSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lengthTextView" />
 
 </android.support.constraint.ConstraintLayout>
