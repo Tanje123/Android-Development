@@ -18,12 +18,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
         Fragment firstFragment = new HomeFragment();
+        currentFragment = new ProfileFragment();
         loadFragment(firstFragment);
-        currentFragment = firstFragment;
     }
 
     private boolean loadFragment(Fragment fragment) {
-        if (fragment != null && fragment != currentFragment) {
+        if (fragment != null && fragment.getClass() != currentFragment.getClass()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.frameLayout, fragment)

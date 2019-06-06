@@ -22,6 +22,9 @@ public interface PasswordDao {
     @Delete
     void deletePassword(Password password);
 
+    @Query("DELETE FROM password")
+    void deleteAllPasswords();
+
     @Update
     void updatePassword(Password password);
 }

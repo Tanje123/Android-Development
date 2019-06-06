@@ -41,12 +41,14 @@ public class SafeFragment extends Fragment {
     private PasswordRoomDatabase db;
     private Executor executor = Executors.newSingleThreadExecutor();
     private Password[] passwordList;
+    private Password addedPassword;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         db = PasswordRoomDatabase.getDatabase(getContext());
         passwordList = new Password[0];
+        getActivity().setTitle("Safe");
         return inflater.inflate(R.layout.fragment_safe, null);
     }
 
@@ -81,7 +83,6 @@ public class SafeFragment extends Fragment {
         specialSwitch  = view.findViewById(R.id.specialSwitch);
         generateButton = view.findViewById(R.id.generateButton);
         lengthSeekBar = view.findViewById(R.id.lengthSeekBar);
-
         //SeekBar setup
         currentProgress = defaultLength;
         lengthTextView.setText("Length: "+currentProgress);
@@ -115,6 +116,7 @@ public class SafeFragment extends Fragment {
                             .show();
                 } else if (getAttributes() == true) {
                     viewModel.fetchPassword(params);
+                    passwordTextView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -123,10 +125,22 @@ public class SafeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!(passwordList.length == 0)) {
-                    insertPassword(passwordList[0]);
+                    if (!(passwordList[0].equals(addedPassword))) {
+                        insertPassword(passwordList[0]);
+                        addedPassword = passwordList[0];
+                        Toast.makeText(getContext(), "Password saved", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        passwordTextView.setText("");
+        passwordTextView.setVisibility(View.INVISIBLE);
     }
 
     private void setupViewModel() {
@@ -153,8 +167,8 @@ public class SafeFragment extends Fragment {
         String lower = "off";
         String numbers = "off";
         String special = "off";
-        int length;
         String exclude = "";
+        int length;
 
         if (lowercaseSwitch.isChecked()) {
             lower = "on";

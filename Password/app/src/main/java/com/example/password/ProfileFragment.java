@@ -27,9 +27,10 @@ public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInsanceState) {
         db = UserRoomDatabase.getDatabase(getContext());
         userList = new ArrayList();
+        getActivity().setTitle("Profile");
         return inflater.inflate(R.layout.fragment_profile, null);
     }
 
@@ -61,10 +62,18 @@ public class ProfileFragment extends Fragment {
                         ,editTextEmail.getText().toString());
                 if (validateFields()) {
                     if (userList.size() == 0) {
+                        Toast.makeText(getActivity(),"Saved information", Toast.LENGTH_LONG).show();
                         insertUser(user);
                     } else {
+                        User newUser = userList.get(0);
                         user.setId(userList.get(0).getId());
-                        if (!(user.equals(userList.get(0)))) {
+                        if (user.getId()== newUser.getId() && user.getEmail().equals(newUser.getEmail())
+                        && user.getFirstName().equals(newUser.getFirstName())
+                                && user.getLastName().equals(newUser.getLastName())) {
+                        } else {
+                            System.out.println(user.toString());
+                            System.out.println(userList.get(0).toString());
+                            Toast.makeText(getActivity(),"Updated information", Toast.LENGTH_LONG).show();
                             updateUser(user);
                         }
                     }
