@@ -13,6 +13,7 @@ import Model.User;
 
 @Dao
 public interface PasswordDao {
+    //methods for password database
     @Query("SELECT * FROM password")
     List<Password> getAllPassword();
 
@@ -21,7 +22,7 @@ public interface PasswordDao {
 
     @Delete
     void deletePassword(Password password);
-
+    //delete all the passwords
     @Query("DELETE FROM password")
     void deleteAllPasswords();
 

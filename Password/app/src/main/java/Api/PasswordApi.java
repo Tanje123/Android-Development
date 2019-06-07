@@ -6,9 +6,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PasswordApi {
+    //Api base url
     private static final String BASE_URL = "https://passwordwolf.com/";
 
-
+    //Password api class
     public static PasswordApiService create() {
 
 

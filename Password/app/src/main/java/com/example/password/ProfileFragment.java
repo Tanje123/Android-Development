@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import Database.UserRoomDatabase;
 import Model.User;
-
+//profile fragment
 public class ProfileFragment extends Fragment {
     private UserRoomDatabase db;
     List<User> userList;
@@ -30,18 +30,18 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInsanceState) {
         db = UserRoomDatabase.getDatabase(getContext());
         userList = new ArrayList();
-        getActivity().setTitle("Profile");
+        getActivity().setTitle(getString(R.string.title_profile));
         return inflater.inflate(R.layout.fragment_profile, null);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAllReminders();
+        getAllUsers();
         setupAttributes(view);
         setupProfile();
         super.onViewCreated(view, savedInstanceState);
     }
-
+    //setup the profile from the data if there is data available
     private void setupProfile() {
         if ((userList.size()) != 0) {
             editTextFirstName.setText(userList.get(0).getFirstName());
@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
             editTextEmail.setText(userList.get(0).getEmail());
         }
     }
-
+    //setup the attributes
     private void setupAttributes(View view) {
         editTextFirstName = view.findViewById(R.id.editTextFirstName);
         editTextSurname = view.findViewById(R.id.editTextSurname);
@@ -60,10 +60,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 User user = new User(editTextFirstName.getText().toString(),editTextSurname.getText().toString()
                         ,editTextEmail.getText().toString());
+                //check if all fields are filled in
                 if (validateFields()) {
+                    //if there is no data available save the information with instert
                     if (userList.size() == 0) {
-                        Toast.makeText(getActivity(),"Saved information", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),getString(R.string.SavedInformation), Toast.LENGTH_LONG).show();
                         insertUser(user);
+                        //otherwise update the new information
                     } else {
                         User newUser = userList.get(0);
                         user.setId(userList.get(0).getId());
@@ -73,7 +76,7 @@ public class ProfileFragment extends Fragment {
                         } else {
                             System.out.println(user.toString());
                             System.out.println(userList.get(0).toString());
-                            Toast.makeText(getActivity(),"Updated information", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(),getString(R.string.UpdatedInformation), Toast.LENGTH_LONG).show();
                             updateUser(user);
                         }
                     }
@@ -82,20 +85,20 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
+    //method to validate if all fields are filled in
     private boolean validateFields() {
         if ( editTextFirstName.getText().toString().length() == 0
                 ||editTextSurname.getText().toString().length() == 0
                 || editTextEmail.getText().toString().length() == 0) {
-            Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.Validation), Toast.LENGTH_SHORT).show();
             return false;
         }
         
         return true;
     }
 
-
-    private void getAllReminders() {
+    //database methods
+    private void getAllUsers() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -117,7 +120,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void run() {
                 db.userDao().insertUser(user);
-                getAllReminders(); // Because the Room database has been modified we need to get the new list of reminders.
+                getAllUsers(); // Because the Room database has been modified we need to get the new list of reminders.
             }
         });
     }
@@ -128,7 +131,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void run() {
                 db.userDao().updateUser(user);
-                getAllReminders(); // Because the Room database has been modified we need to get the new list of reminders.
+                getAllUsers(); // Because the Room database has been modified we need to get the new list of reminders.
             }
         });
     }
@@ -139,7 +142,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void run() {
                 db.userDao().deleteUser(user);
-                getAllReminders(); // Because the Room database has been modified we need to get the new list of reminders.
+                getAllUsers(); // Because the Room database has been modified we need to get the new list of reminders.
             }
         });
     }

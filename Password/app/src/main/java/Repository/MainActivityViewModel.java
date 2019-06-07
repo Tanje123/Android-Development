@@ -11,7 +11,7 @@ import Model.Password;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+//main activity
 public class MainActivityViewModel extends AndroidViewModel {
     private PasswordRepository passwordRepository = new PasswordRepository();
     private MutableLiveData<Password[]> password = new MutableLiveData<>();
@@ -31,7 +31,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void fetchPassword(Map<String,String> params) {
-
+//fetch password reposityo data
         passwordRepository
                 .getPassword(params)
                 .enqueue(new Callback<Password[]>() {

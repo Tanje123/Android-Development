@@ -8,7 +8,7 @@ import android.content.Context;
 import com.example.password.ProfileFragment;
 
 import Model.User;
-
+//User database class
 @Database(entities = User.class, version = 1, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
     private final static String NAME_DATABASE = "user_database";

@@ -3,4 +3,31 @@
     <string name="title_home">Home</string>
     <string name="title_safe">Safe</string>
     <string name="title_profile">Profile</string>
+    <string name="action_delete">Delete</string>
+    <string name="Length">Length</string>
+    <string name="Lowercase">Lowercase</string>
+    <string name="Uppercase">Uppercase</string>
+    <string name="Numbers">Numbers</string>
+    <string name="SpecialChar">Special characters</string>
+    <string name="Generate">Generate</string>
+    <string name="Submit">Submit</string>
+    <string name="Share">Share</string>
+    <string name="ShareSubject">Generated password</string>
+    <string name="Delete">Delete</string>
+    <string name="Deletedall">Deleted all passwords</string>
+    <string name="Undo">Undo</string>
+    <string name="SavedInformation">Saved the information</string>
+    <string name="UpdatedInformation">Updated the information</string>
+    <string name="Validation">Please fill in all the fields</string>
+    <string name="ValidationMessage">Please have on of the options activated</string>
+    <string name="PasswordSaved">Password saved</string>
+    <string name="ApiError">Api error:</string>
+
+
+
+
+
+
+
+
 </resources>

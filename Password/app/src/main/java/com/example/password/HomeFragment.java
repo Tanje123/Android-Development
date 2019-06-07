@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +33,7 @@ import Recycler.PasswordAdapter;
 import Recycler.RecyclerViewClickListener;
 import Recycler.RecyclerViewTouchListener;
 import Repository.MainActivityViewModel;
-
+//the home fragment
 public class HomeFragment extends Fragment {
 
     private PasswordRoomDatabase db;
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         db = PasswordRoomDatabase.getDatabase(getContext());
         passwordList = new ArrayList();
         deletedList = new ArrayList();
-        getActivity().setTitle("Home");
+        getActivity().setTitle(getString(R.string.title_home));
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_home, null);
     }
@@ -60,12 +61,16 @@ public class HomeFragment extends Fragment {
         passwordAdapter = new PasswordAdapter(passwordList);
         recyclerView.setAdapter(passwordAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //on click open the detail activity and pass the password to it
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("passedPassword", passwordList.get(position));
-                getActivity().startActivity(intent);
+                String transitionImage = "simple_activity_transition";
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.textView)
+                        ,transitionImage);
+                getActivity().startActivity(intent, options.toBundle());
             }
 
             @Override
@@ -76,13 +81,14 @@ public class HomeFragment extends Fragment {
         getAllPasswords();
         super.onViewCreated(view, savedInstanceState);
     }
-
+    //method to get all passwords
     private void getAllPasswords() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 passwordList.clear();
-                passwordList.addAll(db.passwordDao().getAllPassword());
+                List<Password> newPasswordList = db.passwordDao().getAllPassword();
+                passwordList.addAll(newPasswordList);
                 // In a background thread the user interface cannot be updated from this thread.
                 // This method will perform statements on the main thread again.
                 getActivity().runOnUiThread(new Runnable() {
@@ -94,14 +100,14 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
+    //setup passwords in the recycler view if available
     private void setupPasswords() {
         if (passwordList.size() != 0) {
             passwordAdapter.setPasswordList(passwordList);
         }
         passwordAdapter.notifyDataSetChanged();
     }
-
+    //instert password
     private void instertPassword(final Password password) {
         executor.execute(new Runnable() {
             @Override
@@ -114,11 +120,12 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //show the bin in the toolbar
         inflater.inflate(R.menu.menu_main, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
-
+    //if the delete button is pressed delete all passwords
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -130,7 +137,7 @@ public class HomeFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //update password
     private void updatePassword(final Password password) {
         executor.execute(new Runnable() {
             @Override
@@ -141,7 +148,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
+    //delete a specific password
     private void deletePassword(final Password password) {
         executor.execute(new Runnable() {
             @Override
@@ -151,7 +158,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
+    //delete all passwords
     private void deleteAllPasswords() {
         executor.execute(new Runnable() {
             @Override
@@ -160,8 +167,8 @@ public class HomeFragment extends Fragment {
                 deletedList.addAll((passwordList));
                 db.passwordDao().deleteAllPasswords();
                 //make the snackbar apear that can undo the delete action
-                Snackbar.make(recyclerView, "Delete", Snackbar.LENGTH_LONG)
-                        .setAction("Undo", new View.OnClickListener() {
+                Snackbar.make(recyclerView, getString(R.string.Deletedall), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.Undo), new View.OnClickListener() {
                             @Override
                             //when the undo button is clicked add all the items back
                             public void onClick(View v) {
@@ -175,5 +182,12 @@ public class HomeFragment extends Fragment {
                 getAllPasswords(); // Because the Room database has been modified we need to get the new list of reminders.
             }
         });
+    }
+
+    @Override
+    //when page is resumed fetch all the data again this is needed when going back from the detail activity
+    public void onResume() {
+        super.onResume();
+        getAllPasswords();
     }
 }

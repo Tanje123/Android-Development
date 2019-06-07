@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 import Database.PasswordRoomDatabase;
 import Model.Password;
 import Repository.MainActivityViewModel;
-
+//safe fragment
 public class SafeFragment extends Fragment {
     private MainActivityViewModel viewModel;
     private Map<String,String> params;
@@ -48,7 +48,7 @@ public class SafeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         db = PasswordRoomDatabase.getDatabase(getContext());
         passwordList = new Password[0];
-        getActivity().setTitle("Safe");
+        getActivity().setTitle(getString(R.string.title_safe));
         return inflater.inflate(R.layout.fragment_safe, null);
     }
 
@@ -60,7 +60,7 @@ public class SafeFragment extends Fragment {
         setupViewModel();
         super.onViewCreated(view, savedInstanceState);
     }
-
+    //params that are used for the api call
     private void setupParams(String upper, String lower, String numbers
             , String special, int length, String exclude) {
 
@@ -72,7 +72,7 @@ public class SafeFragment extends Fragment {
         params.put("exclude", exclude);
         params.put("repeat", "1");
     }
-
+    //setup all the attributes
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setupAttributes(View view) {
         passwordTextView = view.findViewById(R.id.passwordTextField);
@@ -85,7 +85,7 @@ public class SafeFragment extends Fragment {
         lengthSeekBar = view.findViewById(R.id.lengthSeekBar);
         //SeekBar setup
         currentProgress = defaultLength;
-        lengthTextView.setText("Length: "+currentProgress);
+        lengthTextView.setText(getString(R.string.Length)+": "+currentProgress);
         lengthSeekBar.setMin(minLength);
         lengthSeekBar.setMax(maxLength);
         lengthSeekBar.setProgress(defaultLength);
@@ -93,7 +93,7 @@ public class SafeFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 currentProgress = seekBar.getProgress();
-                lengthTextView.setText("Length: "+currentProgress);
+                lengthTextView.setText(getString(R.string.Length)+": "+currentProgress);
             }
 
             @Override
@@ -111,8 +111,7 @@ public class SafeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getAttributes() == false) {
-                    Toast.makeText(getContext(), "Please have one of the options " +
-                            "activated", Toast.LENGTH_LONG)
+                    Toast.makeText(getContext(), getString(R.string.ValidationMessage), Toast.LENGTH_LONG)
                             .show();
                 } else if (getAttributes() == true) {
                     viewModel.fetchPassword(params);
@@ -128,21 +127,21 @@ public class SafeFragment extends Fragment {
                     if (!(passwordList[0].equals(addedPassword))) {
                         insertPassword(passwordList[0]);
                         addedPassword = passwordList[0];
-                        Toast.makeText(getContext(), "Password saved", Toast.LENGTH_LONG)
+                        Toast.makeText(getContext(), getString(R.string.PasswordSaved), Toast.LENGTH_LONG)
                                 .show();
                     }
                 }
             }
         });
     }
-
+    //onresume method clear the previous generated password
     @Override
     public void onResume() {
         super.onResume();
         passwordTextView.setText("");
         passwordTextView.setVisibility(View.INVISIBLE);
     }
-
+    //setup the view model
     private void setupViewModel() {
         viewModel = ViewModelProviders.of(getActivity()).get(MainActivityViewModel.class);
         viewModel.getError().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -161,7 +160,7 @@ public class SafeFragment extends Fragment {
             }
         });
     }
-
+    //method to setup the api params
     private boolean getAttributes() {
         String upper = "off";
         String lower = "off";
@@ -191,7 +190,7 @@ public class SafeFragment extends Fragment {
         setupParams(upper,lower,numbers,special,length,exclude);
         return true;
     }
-
+    //method to insert password
     private void insertPassword(final Password password) {
         executor.execute(new Runnable() {
             @Override

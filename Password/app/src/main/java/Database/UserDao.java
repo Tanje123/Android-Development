@@ -11,6 +11,7 @@ import java.util.List;
 import Model.User;
 
 @Dao
+//user interface
 public interface UserDao {
     @Query("SELECT * FROM user")
     List<User> getAllUser();

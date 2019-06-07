@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+// user class
 @Entity(tableName = "user")
 public class User implements Parcelable {
     @PrimaryKey(autoGenerate = true)

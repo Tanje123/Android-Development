@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import Model.Password;
-
+//Password room database class
 @Database(entities = Password.class, version = 1, exportSchema = false)
 public abstract class PasswordRoomDatabase extends RoomDatabase {
     private final static String NAME_DATABASE = "password_database";

@@ -8,7 +8,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+//password class
 @Entity(tableName = "password")
 public class Password implements Parcelable {
     @PrimaryKey(autoGenerate = true)

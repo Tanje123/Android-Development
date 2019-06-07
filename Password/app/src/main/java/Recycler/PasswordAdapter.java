@@ -13,7 +13,7 @@ import com.example.password.R;
 import java.util.List;
 
 import Model.Password;
-
+//adapter for passwords
 public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder>{
     private List<Password> passwordList;
 
