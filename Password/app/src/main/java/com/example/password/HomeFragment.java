@@ -51,7 +51,6 @@ public class HomeFragment extends Fragment {
         passwordList = new ArrayList();
         deletedList = new ArrayList();
         getActivity().setTitle(getString(R.string.title_home));
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_home, null);
     }
 
